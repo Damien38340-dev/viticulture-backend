@@ -16,6 +16,8 @@ public class WeatherDataController {
 
     @Autowired
     private WeatherDataService weatherDataService;
+
+    @Autowired
     private WeatherApiService weatherApiService;
 
     @GetMapping
@@ -63,7 +65,7 @@ public class WeatherDataController {
         return ResponseEntity.ok("Weather Data with ID : " + id + " deleted successfully");
     }
 
-    @GetMapping("/{city}")
+    @GetMapping("/city/{city}")
     public WeatherData getWeatherData(@PathVariable String city){
         return weatherApiService.fetchWeatherData(city);
     }
