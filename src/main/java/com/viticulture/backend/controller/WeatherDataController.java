@@ -2,6 +2,7 @@ package com.viticulture.backend.controller;
 
 import com.viticulture.backend.dto.WeatherDataDTO;
 import com.viticulture.backend.domainobject.WeatherData;
+import com.viticulture.backend.service.WeatherApiService;
 import com.viticulture.backend.service.WeatherDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ public class WeatherDataController {
 
     @Autowired
     private WeatherDataService weatherDataService;
+    private WeatherApiService weatherApiService;
 
     @GetMapping
     public List<WeatherData> getAllWeatherData() {
@@ -59,5 +61,10 @@ public class WeatherDataController {
     public ResponseEntity<String> deleteWeatherData(@PathVariable Long id) {
         weatherDataService.deleteWeatherData(id);
         return ResponseEntity.ok("Weather Data with ID : " + id + " deleted successfully");
+    }
+
+    @GetMapping("/{city}")
+    public WeatherData getWeatherData(@PathVariable String city){
+        return weatherApiService.fetchWeatherData(city);
     }
 }

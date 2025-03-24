@@ -1,6 +1,6 @@
 {
   "version": "1",
-  "name": "Viticulture",
+  "name": "bruno-viticulture-tests-api",
   "type": "collection",
   "ignore": [
     "node_modules",

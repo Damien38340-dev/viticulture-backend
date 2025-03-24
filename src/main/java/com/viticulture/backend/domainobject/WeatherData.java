@@ -10,10 +10,10 @@ public class WeatherData {
     private double humidity;
     private double pressure;
     private double windSpeed;
-    private String windDirection;
+    private double windDirection;
     private double precipitation;
 
-    public WeatherData(String date, double temperature, double humidity, double pressure, double windSpeed, String windDirection, double precipitation) {
+    public WeatherData(String date, double temperature, double humidity, double pressure, double windSpeed, double windDirection, double precipitation) {
         this.date = date;
         this.temperature = temperature;
         this.humidity = humidity;

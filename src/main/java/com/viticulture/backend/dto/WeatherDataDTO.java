@@ -5,6 +5,6 @@ public record WeatherDataDTO(String date,
                              double humidity,
                              double pressure,
                              double windSpeed,
-                             String windDirection,
+                             double windDirection,
                              double precipitation) {
 }
