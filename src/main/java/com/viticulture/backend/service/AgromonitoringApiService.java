@@ -1,8 +1,8 @@
 package com.viticulture.backend.service;
 
-import com.viticulture.backend.domainobject.SoilMoistureData;
+import com.viticulture.backend.domainobject.SoilData;
 
 public interface AgromonitoringApiService {
 
-    SoilMoistureData getSoilMoistureData(String polyId);
+    SoilData getSoilData(String polyId);
 }

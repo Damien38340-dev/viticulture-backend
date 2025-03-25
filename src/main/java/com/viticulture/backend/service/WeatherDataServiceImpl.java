@@ -15,8 +15,8 @@ public class WeatherDataServiceImpl implements WeatherDataService {
     @Autowired
     private WeatherDataRepository weatherDataRepository;
 
+    @Override
     public List<WeatherData> getAllWeatherData() {
-
         List<WeatherDataEntity> weatherDataEntities = weatherDataRepository.findAll();
 
         return weatherDataEntities.stream()
@@ -24,6 +24,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
                 .collect(Collectors.toList());
     }
 
+    @Override
     public WeatherData getWeatherDataById(Long id) {
 
         WeatherDataEntity weatherDataEntity = weatherDataRepository.getReferenceById(id);
@@ -31,6 +32,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         return convertToDomain(weatherDataEntity);
     }
 
+    @Override
     public WeatherData saveWeatherData(WeatherData weatherData) {
 
         WeatherDataEntity weatherDataEntity = convertToEntity(weatherData);
@@ -40,6 +42,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         return weatherData;
     }
 
+    @Override
     public WeatherData updateWeatherData(WeatherData weatherData, Long id) {
 
         WeatherDataEntity weatherDataEntityToBeChanged = weatherDataRepository.getReferenceById(id);
@@ -57,6 +60,7 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         return weatherData;
     }
 
+    @Override
     public void deleteWeatherData(Long id) {
         weatherDataRepository.deleteById(id);
     }

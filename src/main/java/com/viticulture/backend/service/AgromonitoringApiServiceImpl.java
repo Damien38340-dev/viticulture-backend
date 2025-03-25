@@ -1,6 +1,6 @@
 package com.viticulture.backend.service;
 
-import com.viticulture.backend.domainobject.SoilMoistureData;
+import com.viticulture.backend.domainobject.SoilData;
 import com.viticulture.backend.dto.SoilApiResponse;
 import com.viticulture.backend.util.DateUtils;
 import com.viticulture.backend.util.UnitUtils;
@@ -24,7 +24,7 @@ public class AgromonitoringApiServiceImpl implements AgromonitoringApiService {
     }
 
     @Override
-    public SoilMoistureData getSoilMoistureData(String polyId) {
+    public SoilData getSoilData(String polyId) {
 
         String url = UriComponentsBuilder.fromHttpUrl("http://api.agromonitoring.com/agro/1.0/soil")
                 .queryParam("polyid", polyId)
@@ -35,7 +35,7 @@ public class AgromonitoringApiServiceImpl implements AgromonitoringApiService {
 
         if (response != null) {
             try {
-                return new SoilMoistureData(
+                return new SoilData(
                         DateUtils.convertTimestampToString(response.getDate()),
                         UnitUtils.convertKelvinToCelsius(response.getT10()),
                         response.getMoisture(),

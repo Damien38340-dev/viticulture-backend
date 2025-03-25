@@ -1,0 +1,20 @@
+meta {
+  name: createSoilData
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:8080/api/soil
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "date": 0,
+    "t10": 6.1,
+    "moisture": 0.129,
+    "t0": 4.0
+  }
+}

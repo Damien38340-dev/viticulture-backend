@@ -8,7 +8,7 @@ import lombok.Data;
 
 @Entity
 @Data
-public class SoilMoistureDataEntity {
+public class SoilDataEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +19,12 @@ public class SoilMoistureDataEntity {
     private double moisture;  // Soil moisture value in m3/m3
     private double t0; // Surface temperature, Kelvins
 
-    public SoilMoistureDataEntity(String date, double t10, double moisture, double t0) {
+    public SoilDataEntity(String date, double t10, double moisture, double t0) {
         this.date = date;
         this.t10 = t10;
         this.moisture = moisture;
         this.t0 = t0;
     }
 
-    public SoilMoistureDataEntity() {}
+    public SoilDataEntity() {}
 }

@@ -1,6 +1,6 @@
 package com.viticulture.backend.service;
 
-import com.viticulture.backend.entity.SoilMoistureDataEntity;
+import com.viticulture.backend.entity.SoilDataEntity;
 import com.viticulture.backend.entity.WeatherDataEntity;
 import com.viticulture.backend.repository.SoilDataRepository;
 import com.viticulture.backend.repository.WeatherDataRepository;
@@ -63,10 +63,10 @@ public class AnalyticsServiceImpl implements AnalyticsService {
     }
 
     @Override
-    public double calculateAverageSoilSurfaceTemperature(){
-List<SoilMoistureDataEntity> soilMoistureDataList = soilDataRepository.findAll();
+    public double calculateAverageSoilSurfaceTemperature() {
+        List<SoilDataEntity> soilMoistureDataList = soilDataRepository.findAll();
         return soilMoistureDataList.stream()
-                .mapToDouble(SoilMoistureDataEntity::getT0)
+                .mapToDouble(SoilDataEntity::getT0)
                 .average()
                 .orElse(0.0);
     }
@@ -74,18 +74,18 @@ List<SoilMoistureDataEntity> soilMoistureDataList = soilDataRepository.findAll()
     @Override
     public double calculateAverageSoilDepthTemperature() {
 
-        List<SoilMoistureDataEntity> soilMoistureDataList = soilDataRepository.findAll();
+        List<SoilDataEntity> soilMoistureDataList = soilDataRepository.findAll();
         return soilMoistureDataList.stream()
-                .mapToDouble(SoilMoistureDataEntity::getT0)
+                .mapToDouble(SoilDataEntity::getT0)
                 .average()
                 .orElse(0.0);
     }
 
     @Override
     public double calculateAverageSoilMoisture() {
-        List<SoilMoistureDataEntity> soilMoistureDataList = soilDataRepository.findAll();
+        List<SoilDataEntity> soilMoistureDataList = soilDataRepository.findAll();
         return soilMoistureDataList.stream()
-                .mapToDouble(SoilMoistureDataEntity::getMoisture)
+                .mapToDouble(SoilDataEntity::getMoisture)
                 .average()
                 .orElse(0.0);
     }
