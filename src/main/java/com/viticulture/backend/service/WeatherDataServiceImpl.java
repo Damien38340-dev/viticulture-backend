@@ -65,6 +65,9 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         return new WeatherData(
                 weatherDataEntity.getDate(),
                 weatherDataEntity.getTemperature(),
+                weatherDataEntity.getTemperatureMin(),
+                weatherDataEntity.getTemperatureMax(),
+                weatherDataEntity.getDaylightDuration(),
                 weatherDataEntity.getHumidity(),
                 weatherDataEntity.getPressure(),
                 weatherDataEntity.getWindSpeed(),
@@ -76,9 +79,12 @@ public class WeatherDataServiceImpl implements WeatherDataService {
     private WeatherDataEntity convertToEntity(WeatherData weatherData) {
         return new WeatherDataEntity(
                 weatherData.getDate(),
+                weatherData.getTemperature(),
+                weatherData.getTemperatureMin(),
+                weatherData.getTemperatureMax(),
+                weatherData.getDaylightDuration(),
                 weatherData.getHumidity(),
                 weatherData.getPressure(),
-                weatherData.getTemperature(),
                 weatherData.getWindSpeed(),
                 weatherData.getWindDirection(),
                 weatherData.getPrecipitation()

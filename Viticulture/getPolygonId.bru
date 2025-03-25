@@ -1,0 +1,15 @@
+meta {
+  name: getPolygonId
+  type: http
+  seq: 2
+}
+
+get {
+  url: https://api.agromonitoring.com/agro/1.0/polygons?appid=5cf9f5c2af686c5670c5b5066e3504db
+  body: none
+  auth: inherit
+}
+
+params:query {
+  appid: 5cf9f5c2af686c5670c5b5066e3504db
+}

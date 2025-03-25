@@ -23,20 +23,19 @@ public class WeatherApiServiceImpl implements WeatherApiService {
     }
 
     public WeatherData fetchWeatherData(String city) {
-        String url = UriComponentsBuilder.fromHttpUrl("https://api.openweathermap.org/data/2.5/weather")
-                .queryParam("q", city)
-                .queryParam("appid", apiKey)
-                .queryParam("units", "metric") // Get temperature in Celsius
-                .toUriString();
+        WeatherApiResponse response = restTemplate.getForObject(buildWeatherApiUrl(city), WeatherApiResponse.class);
 
-        // HTTP request
-        WeatherApiResponse response = restTemplate.getForObject(url, WeatherApiResponse.class);
-
-        assert response != null;
+        double adjustedDaylightDuration = getDaylightDuration(
+                response.getSys().getSunrise(),
+                response.getSys().getSunset(),
+                response.getClouds().getAll());
 
         return new WeatherData(
                 DateUtils.convertTimestampToString(response.getDt()),
                 response.getMain().getTemp(),
+                response.getMain().getTempMin(),
+                response.getMain().getTempMax(),
+                adjustedDaylightDuration,
                 response.getMain().getHumidity(),
                 response.getMain().getPressure(),
                 response.getWind().getSpeed(),
@@ -44,4 +43,18 @@ public class WeatherApiServiceImpl implements WeatherApiService {
                 response.getRain() != null ? response.getRain().getOneHour() : 0
         );
     }
+
+    private String buildWeatherApiUrl(String city) {
+        return UriComponentsBuilder.fromHttpUrl("https://api.openweathermap.org/data/2.5/weather")
+                .queryParam("q", city)
+                .queryParam("appid", apiKey)
+                .queryParam("units", "metric")
+                .toUriString();
+    }
+
+    private double getDaylightDuration(long sunriseTimestamp, long sunsetTimestamp, double cloudCover) {
+        long daylightDuration = ((sunsetTimestamp - sunriseTimestamp) / 3600); // Convert to hours
+        return daylightDuration * (1 - cloudCover / 100.0); // Adjusting with cloud cover
+    }
+
 }

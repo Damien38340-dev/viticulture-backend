@@ -35,6 +35,9 @@ public class WeatherDataController {
         WeatherData weatherDataEntityToBeSaved = new WeatherData(
                 weatherDataDTO.date(),
                 weatherDataDTO.temperature(),
+                weatherDataDTO.temperatureMin(),
+                weatherDataDTO.temperatureMax(),
+                weatherDataDTO.daylightDuration(),
                 weatherDataDTO.humidity(),
                 weatherDataDTO.pressure(),
                 weatherDataDTO.windSpeed(),
@@ -50,13 +53,16 @@ public class WeatherDataController {
         WeatherData weatherDataEntityToBeUpdated = new WeatherData(
                 weatherDataDTO.date(),
                 weatherDataDTO.temperature(),
+                weatherDataDTO.temperatureMin(),
+                weatherDataDTO.temperatureMax(),
+                weatherDataDTO.daylightDuration(),
                 weatherDataDTO.humidity(),
                 weatherDataDTO.pressure(),
                 weatherDataDTO.windSpeed(),
                 weatherDataDTO.windDirection(),
                 weatherDataDTO.precipitation()
         );
-        return weatherDataService.updateWeatherData(weatherDataEntityToBeUpdated,id);
+        return weatherDataService.updateWeatherData(weatherDataEntityToBeUpdated, id);
     }
 
     @DeleteMapping("/{id}")
@@ -66,7 +72,10 @@ public class WeatherDataController {
     }
 
     @GetMapping("/city/{city}")
-    public WeatherData getWeatherData(@PathVariable String city){
-        return weatherApiService.fetchWeatherData(city);
+    public ResponseEntity<WeatherData> getWeatherDataByCity(@PathVariable String city) {
+
+        WeatherData weatherData = weatherApiService.fetchWeatherData(city);
+
+        return ResponseEntity.ok(weatherData);
     }
 }

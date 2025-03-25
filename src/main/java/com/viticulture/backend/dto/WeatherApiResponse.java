@@ -10,11 +10,15 @@ public class WeatherApiResponse {
     private Main main;
     private Wind wind;
     private Rain rain;
+    private Clouds clouds;
+    private Sys sys;
     private long dt; // Unix timestamp for date
 
     @Data
     public static class Main {
         private double temp;
+        private double tempMin;
+        private double tempMax;
         private double humidity;
         private double pressure;
 
@@ -32,6 +36,17 @@ public class WeatherApiResponse {
         @JsonProperty("1h")
         private double oneHour;
 
+    }
+
+    @Data
+    public static class Clouds {
+        private int all;
+    }
+
+    @Data
+    public static class Sys {
+        private long sunrise;
+        private long sunset;
     }
 
 }
