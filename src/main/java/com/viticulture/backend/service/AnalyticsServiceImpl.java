@@ -1,6 +1,8 @@
 package com.viticulture.backend.service;
 
+import com.viticulture.backend.entity.SoilMoistureDataEntity;
 import com.viticulture.backend.entity.WeatherDataEntity;
+import com.viticulture.backend.repository.SoilDataRepository;
 import com.viticulture.backend.repository.WeatherDataRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,9 @@ public class AnalyticsServiceImpl implements AnalyticsService {
 
     @Autowired
     private WeatherDataRepository weatherDataRepository;
+
+    @Autowired
+    private SoilDataRepository soilDataRepository;
 
     @Override
     public double calculateAverageTemperature() {
@@ -55,6 +60,34 @@ public class AnalyticsServiceImpl implements AnalyticsService {
         return weatherDataList.stream()
                 .mapToDouble(WeatherDataEntity::getPrecipitation)
                 .sum();
+    }
+
+    @Override
+    public double calculateAverageSoilSurfaceTemperature(){
+List<SoilMoistureDataEntity> soilMoistureDataList = soilDataRepository.findAll();
+        return soilMoistureDataList.stream()
+                .mapToDouble(SoilMoistureDataEntity::getT0)
+                .average()
+                .orElse(0.0);
+    }
+
+    @Override
+    public double calculateAverageSoilDepthTemperature() {
+
+        List<SoilMoistureDataEntity> soilMoistureDataList = soilDataRepository.findAll();
+        return soilMoistureDataList.stream()
+                .mapToDouble(SoilMoistureDataEntity::getT0)
+                .average()
+                .orElse(0.0);
+    }
+
+    @Override
+    public double calculateAverageSoilMoisture() {
+        List<SoilMoistureDataEntity> soilMoistureDataList = soilDataRepository.findAll();
+        return soilMoistureDataList.stream()
+                .mapToDouble(SoilMoistureDataEntity::getMoisture)
+                .average()
+                .orElse(0.0);
     }
 
     // More complex analytics logic (e.g., trends, comparisons, etc.) can go here

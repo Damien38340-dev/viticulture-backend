@@ -11,4 +11,10 @@ public interface AnalyticsService {
     double calculateAveragePressure();
 
     double calculateTotalPrecipitation();
+
+    double calculateAverageSoilSurfaceTemperature();
+
+    double calculateAverageSoilDepthTemperature();
+
+    double calculateAverageSoilMoisture();
 }
