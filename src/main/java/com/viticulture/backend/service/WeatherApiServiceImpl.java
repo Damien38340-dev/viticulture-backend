@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Optional;
+
 @Service
 public class WeatherApiServiceImpl implements WeatherApiService {
 
@@ -22,20 +24,39 @@ public class WeatherApiServiceImpl implements WeatherApiService {
         this.restTemplate = restTemplate;
     }
 
+    @Autowired
+    private WeatherDataService weatherDataService;
+
+    @Override
     public WeatherData fetchWeatherData(String city) {
+
+        Optional<WeatherData> latestWeather = weatherDataService.getLatestWeatherData(city);
+
+        if (latestWeather.isPresent()) {
+            return latestWeather.get(); //Return cached data
+        }
+
+        WeatherData weatherData = fetchWeatherDataFromApi(city);
+
+        return weatherDataService.saveWeatherData(weatherData);
+    }
+
+    @Override
+    public WeatherData fetchWeatherDataFromApi(String city) {
         WeatherApiResponse response = restTemplate.getForObject(buildWeatherApiUrl(city), WeatherApiResponse.class);
 
-        double adjustedDaylightDuration = getDaylightDuration(
+        double adjustedInsolationDuration = getInsolationDuration(
                 response.getSys().getSunrise(),
                 response.getSys().getSunset(),
                 response.getClouds().getAll());
 
         return new WeatherData(
+                city,
                 DateUtils.convertTimestampToString(response.getDt()),
                 response.getMain().getTemp(),
-                response.getMain().getTempMin(),
-                response.getMain().getTempMax(),
-                adjustedDaylightDuration,
+                response.getMain().getTemp_min(),
+                response.getMain().getTemp_max(),
+                adjustedInsolationDuration,
                 response.getMain().getHumidity(),
                 response.getMain().getPressure(),
                 response.getWind().getSpeed(),
@@ -52,9 +73,9 @@ public class WeatherApiServiceImpl implements WeatherApiService {
                 .toUriString();
     }
 
-    private double getDaylightDuration(long sunriseTimestamp, long sunsetTimestamp, double cloudCover) {
-        long daylightDuration = ((sunsetTimestamp - sunriseTimestamp) / 3600); // Convert to hours
-        return daylightDuration * (1 - cloudCover / 100.0); // Adjusting with cloud cover
+    private double getInsolationDuration(long sunriseTimestamp, long sunsetTimestamp, double cloudCover) {
+        long insolationDuration = ((sunsetTimestamp - sunriseTimestamp) / 3600); // Convert to hours
+        return insolationDuration * (1 - cloudCover / 100.0); // Adjusting with cloud cover
     }
 
 }

@@ -17,8 +17,8 @@ public class WeatherApiResponse {
     @Data
     public static class Main {
         private double temp;
-        private double tempMin;
-        private double tempMax;
+        private double temp_min;
+        private double temp_max;
         private double humidity;
         private double pressure;
 

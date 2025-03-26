@@ -1,6 +1,7 @@
 package com.viticulture.backend.dto;
 
-public record WeatherDataDTO(String date,
+public record WeatherDataDTO(String city,
+                             String date,
                              double temperature,
                              double temperatureMin,
                              double temperatureMax,

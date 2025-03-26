@@ -1,7 +1,7 @@
 package com.viticulture.backend.controller;
 
-import com.viticulture.backend.dto.WeatherDataDTO;
 import com.viticulture.backend.domainobject.WeatherData;
+import com.viticulture.backend.dto.WeatherDataDTO;
 import com.viticulture.backend.service.WeatherApiService;
 import com.viticulture.backend.service.WeatherDataService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,7 @@ public class WeatherDataController {
     @PostMapping
     public WeatherData createWeatherData(@RequestBody WeatherDataDTO weatherDataDTO) {
         WeatherData weatherDataEntityToBeSaved = new WeatherData(
+                weatherDataDTO.city(),
                 weatherDataDTO.date(),
                 weatherDataDTO.temperature(),
                 weatherDataDTO.temperatureMin(),
@@ -51,6 +52,7 @@ public class WeatherDataController {
     @PatchMapping("/{id}")
     public WeatherData updateWeatherData(@PathVariable Long id, @RequestBody WeatherDataDTO weatherDataDTO) {
         WeatherData weatherDataEntityToBeUpdated = new WeatherData(
+                weatherDataDTO.city(),
                 weatherDataDTO.date(),
                 weatherDataDTO.temperature(),
                 weatherDataDTO.temperatureMin(),

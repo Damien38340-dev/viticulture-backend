@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,11 +68,12 @@ public class WeatherDataServiceImpl implements WeatherDataService {
 
     private WeatherData convertToDomain(WeatherDataEntity weatherDataEntity) {
         return new WeatherData(
+                weatherDataEntity.getCity(),
                 weatherDataEntity.getDate(),
                 weatherDataEntity.getTemperature(),
                 weatherDataEntity.getTemperatureMin(),
                 weatherDataEntity.getTemperatureMax(),
-                weatherDataEntity.getDaylightDuration(),
+                weatherDataEntity.getInsolationDuration(),
                 weatherDataEntity.getHumidity(),
                 weatherDataEntity.getPressure(),
                 weatherDataEntity.getWindSpeed(),
@@ -82,16 +84,22 @@ public class WeatherDataServiceImpl implements WeatherDataService {
 
     private WeatherDataEntity convertToEntity(WeatherData weatherData) {
         return new WeatherDataEntity(
+                weatherData.getCity(),
                 weatherData.getDate(),
                 weatherData.getTemperature(),
                 weatherData.getTemperatureMin(),
                 weatherData.getTemperatureMax(),
-                weatherData.getDaylightDuration(),
+                weatherData.getInsolationDuration(),
                 weatherData.getHumidity(),
                 weatherData.getPressure(),
                 weatherData.getWindSpeed(),
                 weatherData.getWindDirection(),
                 weatherData.getPrecipitation()
         );
+    }
+
+    public Optional<WeatherData> getLatestWeatherData(String city) {
+        return weatherDataRepository.findTopByCityOrderByDateDesc(city)
+                .map(this::convertToDomain);
     }
 }

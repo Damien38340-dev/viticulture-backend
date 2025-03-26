@@ -3,6 +3,7 @@ package com.viticulture.backend.service;
 import com.viticulture.backend.domainobject.WeatherData;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface WeatherDataService {
 
@@ -15,4 +16,7 @@ public interface WeatherDataService {
     WeatherData updateWeatherData(WeatherData weatherData, Long id);
 
     void deleteWeatherData(Long id);
+
+    Optional<WeatherData> getLatestWeatherData(String city);
+
 }
