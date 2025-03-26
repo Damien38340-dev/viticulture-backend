@@ -31,14 +31,10 @@ public class SoilDataController {
         return ResponseEntity.ok(soilDataService.getSoilDataById(id));
     }
 
-    @GetMapping("/polyid/{polyId}")
-    public ResponseEntity<SoilData> getSoilDataByPolyId(@PathVariable String polyId) {
-        return ResponseEntity.ok(agromonitoringApiService.getSoilData(polyId));
-    }
-
     @PostMapping
     public ResponseEntity<SoilData> createSoilData(@RequestBody SoilApiResponse response) {
         SoilData soilData = new SoilData(
+                response.getPolyId(),
                 DateUtils.convertTimestampToString(response.getDate()),
                 response.getT0(),
                 response.getMoisture(),
@@ -50,6 +46,7 @@ public class SoilDataController {
     @PatchMapping("/{id}")
     public ResponseEntity<SoilData> updateSoilData(@RequestBody SoilApiResponse response, @PathVariable Long id) {
         SoilData soilData = new SoilData(
+                response.getPolyId(),
                 DateUtils.convertTimestampToString(response.getDate()),
                 response.getT0(),
                 response.getMoisture(),
@@ -62,5 +59,10 @@ public class SoilDataController {
     public ResponseEntity<String> deleteSoilData(@PathVariable Long id) {
         soilDataService.deleteSoilData(id);
         return ResponseEntity.ok("Soil Data with ID : " + id + " deleted successfully");
+    }
+
+    @GetMapping("/polyid/{polyId}")
+    public ResponseEntity<SoilData> getSoilDataByPolyId(@PathVariable String polyId) {
+        return ResponseEntity.ok(agromonitoringApiService.getSoilData(polyId));
     }
 }

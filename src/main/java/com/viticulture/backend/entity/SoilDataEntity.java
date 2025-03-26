@@ -14,12 +14,14 @@ public class SoilDataEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String polyId;
     private String date; // Time of data calculation (unix time, UTC time zone)
     private double t10; // Temperature on the 10 centimeters depth, Kelvins
     private double moisture;  // Soil moisture value in m3/m3
     private double t0; // Surface temperature, Kelvins
 
-    public SoilDataEntity(String date, double t10, double moisture, double t0) {
+    public SoilDataEntity(String polyId, String date, double t10, double moisture, double t0) {
+        this.polyId = polyId;
         this.date = date;
         this.t10 = t10;
         this.moisture = moisture;

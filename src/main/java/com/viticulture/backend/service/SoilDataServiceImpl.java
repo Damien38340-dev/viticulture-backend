@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -57,8 +58,15 @@ public class SoilDataServiceImpl implements SoilDataService {
         soilDataRepository.deleteById(id);
     }
 
+    @Override
+    public Optional<SoilData> getLatestSoilData(String polyId) {
+        return soilDataRepository.findTopByPolyIdOrderByDateDesc(polyId)
+                .map(this::convertToDomain);
+    }
+
     private SoilData convertToDomain(SoilDataEntity soilDataEntity) {
         return new SoilData(
+                soilDataEntity.getPolyId(),
                 soilDataEntity.getDate(),
                 soilDataEntity.getT0(),
                 soilDataEntity.getMoisture(),
@@ -68,6 +76,7 @@ public class SoilDataServiceImpl implements SoilDataService {
 
     private SoilDataEntity convertToEntity(SoilData soilData) {
         return new SoilDataEntity(
+                soilData.getPolyId(),
                 soilData.getDate(),
                 soilData.getT0(),
                 soilData.getMoisture(),

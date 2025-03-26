@@ -5,4 +5,6 @@ import com.viticulture.backend.domainobject.SoilData;
 public interface AgromonitoringApiService {
 
     SoilData getSoilData(String polyId);
+
+    SoilData getSoilDataFromApi(String polyId);
 }

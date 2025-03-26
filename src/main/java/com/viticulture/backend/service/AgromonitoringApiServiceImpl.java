@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Optional;
+
 @Service
 public class AgromonitoringApiServiceImpl implements AgromonitoringApiService {
 
@@ -23,8 +25,24 @@ public class AgromonitoringApiServiceImpl implements AgromonitoringApiService {
         this.restTemplate = restTemplate;
     }
 
+    @Autowired
+    private SoilDataService soilDataService;
+
     @Override
     public SoilData getSoilData(String polyId) {
+        Optional<SoilData> latestSoilData = soilDataService.getLatestSoilData(polyId);
+
+        if (latestSoilData.isPresent()) {
+            return latestSoilData.get();
+        }
+
+        SoilData soilData = getSoilDataFromApi(polyId);
+
+        return soilDataService.saveSoilData(soilData);
+    }
+
+    @Override
+    public SoilData getSoilDataFromApi(String polyId) {
 
         String url = UriComponentsBuilder.fromHttpUrl("http://api.agromonitoring.com/agro/1.0/soil")
                 .queryParam("polyid", polyId)
@@ -36,6 +54,7 @@ public class AgromonitoringApiServiceImpl implements AgromonitoringApiService {
         if (response != null) {
             try {
                 return new SoilData(
+                        polyId,
                         DateUtils.convertTimestampToString(response.getDate()),
                         UnitUtils.convertKelvinToCelsius(response.getT10()),
                         response.getMoisture(),

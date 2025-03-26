@@ -75,9 +75,6 @@ public class WeatherDataController {
 
     @GetMapping("/city/{city}")
     public ResponseEntity<WeatherData> getWeatherDataByCity(@PathVariable String city) {
-
-        WeatherData weatherData = weatherApiService.fetchWeatherData(city);
-
-        return ResponseEntity.ok(weatherData);
+        return ResponseEntity.ok(weatherApiService.fetchWeatherData(city));
     }
 }
