@@ -75,7 +75,7 @@ public class WeatherApiServiceImpl implements WeatherApiService {
 
     private double getInsolationDuration(long sunriseTimestamp, long sunsetTimestamp, double cloudCover) {
         long insolationDuration = ((sunsetTimestamp - sunriseTimestamp) / 3600); // Convert to hours
-        return insolationDuration * (1 - cloudCover / 100.0); // Adjusting with cloud cover
+        return Math.round(insolationDuration * (1 - cloudCover / 100.0)); // Adjusting with cloud cover
     }
 
 }
