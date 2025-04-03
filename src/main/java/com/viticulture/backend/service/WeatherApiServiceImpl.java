@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -59,8 +60,8 @@ public class WeatherApiServiceImpl implements WeatherApiService {
                 response.getWeather().get(0).getMain(),
                 response.getWeather().get(0).getDescription(),
                 response.getWeather().get(0).getIcon(),
-                response.getSys().getSunrise(),
-                response.getSys().getSunset(),
+                DateUtils.convertTimestampToStringHoursFormat(response.getSys().getSunrise()),
+                DateUtils.convertTimestampToStringHoursFormat(response.getSys().getSunset()),
                 response.getMain().getTemp(),
                 response.getMain().getTemp_min(),
                 response.getMain().getTemp_max(),
@@ -92,8 +93,8 @@ public class WeatherApiServiceImpl implements WeatherApiService {
                         forecast.getWeather() != null && !forecast.getWeather().isEmpty() ? forecast.getWeather().get(0).getMain() : "Unknown",
                         forecast.getWeather() != null && !forecast.getWeather().isEmpty() ? forecast.getWeather().get(0).getDescription() : "No description",
                         forecast.getWeather() != null && !forecast.getWeather().isEmpty() ? forecast.getWeather().get(0).getIcon() : "default_icon",
-                        response.getCity().getSunrise(),
-                        response.getCity().getSunset(),
+                        DateUtils.convertTimestampToStringHoursFormat(response.getCity().getSunrise()),
+                        DateUtils.convertTimestampToStringHoursFormat(response.getCity().getSunset()),
                         forecast.getMain().getTemp(),
                         forecast.getMain().getTemp_min(),
                         forecast.getMain().getTemp_max(),

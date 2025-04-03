@@ -16,6 +16,16 @@ public class DateUtils {
         return dateTime.format(formatter);
     }
 
+    public static String convertTimestampToStringHoursFormat(Long timestamp) {
+        Instant instant = Instant.ofEpochSecond(timestamp);
+
+        ZonedDateTime dateTime = instant.atZone(ZoneId.systemDefault());
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
+
+        return dateTime.format(formatter);
+    }
+
     public static String convertDateToString(Date date) {
         Instant instant = Instant.ofEpochSecond(date.getTime());
         ZonedDateTime dateTime = instant.atZone(ZoneId.systemDefault());
