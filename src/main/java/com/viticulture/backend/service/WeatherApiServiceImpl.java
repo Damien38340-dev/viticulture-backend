@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -32,8 +33,8 @@ public class WeatherApiServiceImpl implements WeatherApiService {
 
         Optional<WeatherData> latestWeather = weatherDataService.getLatestWeatherData(city);
 
-        if (latestWeather.isPresent()) {
-            return latestWeather.get(); //Return cached data
+        if (latestWeather.isPresent() && DateUtils.isLessThanOneHourOld(latestWeather.get().getDate())) {
+            return latestWeather.get();
         }
 
         WeatherData weatherData = fetchWeatherDataFromApi(city);

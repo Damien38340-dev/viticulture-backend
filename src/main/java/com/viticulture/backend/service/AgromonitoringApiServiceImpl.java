@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -32,7 +34,7 @@ public class AgromonitoringApiServiceImpl implements AgromonitoringApiService {
     public SoilData getSoilData(String polyId) {
         Optional<SoilData> latestSoilData = soilDataService.getLatestSoilData(polyId);
 
-        if (latestSoilData.isPresent()) {
+        if (latestSoilData.isPresent() && DateUtils.isLessThanOneHourOld(latestSoilData.get().getDate())) {
             return latestSoilData.get();
         }
 
@@ -55,7 +57,7 @@ public class AgromonitoringApiServiceImpl implements AgromonitoringApiService {
             try {
                 return new SoilData(
                         polyId,
-                        DateUtils.convertTimestampToString(response.getDate()),
+                        DateUtils.convertDateToString(Date.from(Instant.now())),
                         UnitUtils.convertKelvinToCelsius(response.getT10()),
                         response.getMoisture(),
                         UnitUtils.convertKelvinToCelsius(response.getT0()));
