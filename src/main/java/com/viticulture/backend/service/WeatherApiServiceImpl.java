@@ -71,8 +71,48 @@ public class WeatherApiServiceImpl implements WeatherApiService {
         );
     }
 
+    @Override
+    public WeatherData fetchForecastByCity(String city) {
+
+        WeatherApiResponse response = restTemplate.getForObject(buildForecastApiUrl(city), WeatherApiResponse.class);
+
+        double adjustedInsolationDuration = getInsolationDuration(
+                response.getSys().getSunrise(),
+                response.getSys().getSunset(),
+                response.getClouds().getAll());
+
+        return new WeatherData(
+                formatCityName(city),
+                DateUtils.convertTimestampToString(response.getDt()),
+                response.getWeather().getMain(),
+                response.getWeather().getDescription(),
+                response.getWeather().getIcon(),
+                response.getMain().getTemp(),
+                response.getMain().getTemp_min(),
+                response.getMain().getTemp_max(),
+                response.getClouds().getAll(),
+                adjustedInsolationDuration,
+                response.getMain().getHumidity(),
+                response.getMain().getPressure(),
+                response.getWind().getSpeed(),
+                response.getWind().getDeg(),
+                response.getRain() != null ? response.getRain().getOneHour() : 0,
+                response.getSnow() != null ? response.getSnow().getOneHour() : 0
+        );
+    }
+
+
+
     private String buildWeatherApiUrl(String city) {
         return UriComponentsBuilder.fromHttpUrl("https://api.openweathermap.org/data/2.5/weather")
+                .queryParam("q", city)
+                .queryParam("appid", apiKey)
+                .queryParam("units", "metric")
+                .toUriString();
+    }
+
+    private String buildForecastApiUrl(String city) {
+        return UriComponentsBuilder.fromHttpUrl("https://api.openweathermap.org/data/2.5/forecast")
                 .queryParam("q", city)
                 .queryParam("appid", apiKey)
                 .queryParam("units", "metric")

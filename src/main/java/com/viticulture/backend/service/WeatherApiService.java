@@ -9,4 +9,7 @@ public interface WeatherApiService {
 
     WeatherData fetchWeatherDataFromApi(String city);
 
+    WeatherData fetchForecastByCity(String city);
+
+
 }
