@@ -52,17 +52,22 @@ public class WeatherApiServiceImpl implements WeatherApiService {
                 response.getClouds().getAll());
 
         return new WeatherData(
-                city,
+                formatCityName(city),
                 DateUtils.convertTimestampToString(response.getDt()),
+                response.getWeather().getMain(),
+                response.getWeather().getDescription(),
+                response.getWeather().getIcon(),
                 response.getMain().getTemp(),
                 response.getMain().getTemp_min(),
                 response.getMain().getTemp_max(),
+                response.getClouds().getAll(),
                 adjustedInsolationDuration,
                 response.getMain().getHumidity(),
                 response.getMain().getPressure(),
                 response.getWind().getSpeed(),
                 response.getWind().getDeg(),
-                response.getRain() != null ? response.getRain().getOneHour() : 0
+                response.getRain() != null ? response.getRain().getOneHour() : 0,
+                response.getSnow() != null ? response.getSnow().getOneHour() : 0
         );
     }
 
@@ -77,6 +82,10 @@ public class WeatherApiServiceImpl implements WeatherApiService {
     private double getInsolationDuration(long sunriseTimestamp, long sunsetTimestamp, double cloudCover) {
         long insolationDuration = ((sunsetTimestamp - sunriseTimestamp) / 3600); // Convert to hours
         return Math.round(insolationDuration * (1 - cloudCover / 100.0)); // Adjusting with cloud cover
+    }
+
+    private String formatCityName(String city) {
+        return city.trim().replace(" ", "+");
     }
 
 }

@@ -35,15 +35,20 @@ public class WeatherDataController {
         WeatherData weatherDataEntityToBeSaved = new WeatherData(
                 weatherDataDTO.city(),
                 weatherDataDTO.date(),
+                weatherDataDTO.weatherCondition(),
+                weatherDataDTO.weatherDescription(),
+                weatherDataDTO.weatherIcon(),
                 weatherDataDTO.temperature(),
                 weatherDataDTO.temperatureMin(),
                 weatherDataDTO.temperatureMax(),
+                weatherDataDTO.clouds(),
                 weatherDataDTO.daylightDuration(),
                 weatherDataDTO.humidity(),
                 weatherDataDTO.pressure(),
                 weatherDataDTO.windSpeed(),
                 weatherDataDTO.windDirection(),
-                weatherDataDTO.precipitation()
+                weatherDataDTO.precipitation(),
+                weatherDataDTO.snow()
         );
 
         return weatherDataService.saveWeatherData(weatherDataEntityToBeSaved);
@@ -54,15 +59,20 @@ public class WeatherDataController {
         WeatherData weatherDataEntityToBeUpdated = new WeatherData(
                 weatherDataDTO.city(),
                 weatherDataDTO.date(),
+                weatherDataDTO.weatherCondition(),
+                weatherDataDTO.weatherDescription(),
+                weatherDataDTO.weatherIcon(),
                 weatherDataDTO.temperature(),
                 weatherDataDTO.temperatureMin(),
                 weatherDataDTO.temperatureMax(),
+                weatherDataDTO.clouds(),
                 weatherDataDTO.daylightDuration(),
                 weatherDataDTO.humidity(),
                 weatherDataDTO.pressure(),
                 weatherDataDTO.windSpeed(),
                 weatherDataDTO.windDirection(),
-                weatherDataDTO.precipitation()
+                weatherDataDTO.precipitation(),
+                weatherDataDTO.snow()
         );
         return weatherDataService.updateWeatherData(weatherDataEntityToBeUpdated, id);
     }

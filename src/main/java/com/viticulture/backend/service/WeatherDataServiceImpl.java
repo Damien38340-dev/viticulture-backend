@@ -70,15 +70,20 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         return new WeatherData(
                 weatherDataEntity.getCity(),
                 weatherDataEntity.getDate(),
+                weatherDataEntity.getWeatherCondition(),
+                weatherDataEntity.getWeatherDescription(),
+                weatherDataEntity.getWeatherIcon(),
                 weatherDataEntity.getTemperature(),
                 weatherDataEntity.getTemperatureMin(),
                 weatherDataEntity.getTemperatureMax(),
+                weatherDataEntity.getClouds(),
                 weatherDataEntity.getInsolationDuration(),
                 weatherDataEntity.getHumidity(),
                 weatherDataEntity.getPressure(),
                 weatherDataEntity.getWindSpeed(),
                 weatherDataEntity.getWindDirection(),
-                weatherDataEntity.getPrecipitation()
+                weatherDataEntity.getPrecipitation(),
+                weatherDataEntity.getSnow()
         );
     }
 
@@ -86,15 +91,20 @@ public class WeatherDataServiceImpl implements WeatherDataService {
         return new WeatherDataEntity(
                 weatherData.getCity(),
                 weatherData.getDate(),
+                weatherData.getWeatherCondition(),
+                weatherData.getWeatherDescription(),
+                weatherData.getWeatherIcon(),
                 weatherData.getTemperature(),
                 weatherData.getTemperatureMin(),
                 weatherData.getTemperatureMax(),
+                weatherData.getClouds(),
                 weatherData.getInsolationDuration(),
                 weatherData.getHumidity(),
                 weatherData.getPressure(),
                 weatherData.getWindSpeed(),
                 weatherData.getWindDirection(),
-                weatherData.getPrecipitation()
+                weatherData.getPrecipitation(),
+                weatherData.getSnow()
         );
     }
 
