@@ -104,7 +104,7 @@ public class WeatherApiServiceImpl implements WeatherApiService {
                         forecast.getMain().getPressure(),
                         forecast.getWind() != null ? forecast.getWind().getSpeed() : 0.0,
                         forecast.getWind() != null ? forecast.getWind().getDeg() : 0.0,
-                        forecast.getRain() != null ? forecast.getRain().getOneHour() : 0.0,
+                        forecast.getRain() != null ? forecast.getRain().getThreeHour() : 0.0,
                         forecast.getSnow() != null ? forecast.getSnow().getOneHour() : 0.0
                 ))
                 .collect(Collectors.toList());

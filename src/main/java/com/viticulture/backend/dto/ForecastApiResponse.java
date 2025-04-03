@@ -55,8 +55,8 @@ public class ForecastApiResponse {
 
     @Data
     public static class Rain {
-        @JsonProperty("1h")
-        private Double oneHour;
+        @JsonProperty("3h")
+        private Double threeHour;
     }
 
     @Data
