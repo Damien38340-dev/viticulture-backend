@@ -22,6 +22,8 @@ public class WeatherDataEntity {
     private String weatherCondition;
     private String weatherDescription;
     private String weatherIcon;
+    private long sunrise;
+    private long sunset;
     private double temperature;
     private double temperatureMin;
     private double temperatureMax;
@@ -34,13 +36,15 @@ public class WeatherDataEntity {
     private double precipitation;
     private double snow;
 
-    public WeatherDataEntity(String city, String date, String weatherCondition, String weatherDescription, String weatherIcon, double temperature, double temperatureMin, double temperatureMax, double clouds, double insolationDuration, double humidity, double pressure, double windSpeed, double windDirection, double precipitation, double snow) {
+    public WeatherDataEntity(String city, String date, String weatherCondition, String weatherDescription, String weatherIcon, long sunrise, long sunset, double temperature, double temperatureMin, double temperatureMax, double clouds, double insolationDuration, double humidity, double pressure, double windSpeed, double windDirection, double precipitation, double snow) {
 
         this.city = city;
         this.date = date;
         this.weatherCondition = weatherCondition;
         this.weatherDescription = weatherDescription;
         this.weatherIcon = weatherIcon;
+        this.sunrise = sunrise;
+        this.sunset = sunset;
         this.temperature = temperature;
         this.temperatureMin = temperatureMin;
         this.temperatureMax = temperatureMax;

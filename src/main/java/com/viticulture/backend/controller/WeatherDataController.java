@@ -38,6 +38,8 @@ public class WeatherDataController {
                 weatherDataDTO.weatherCondition(),
                 weatherDataDTO.weatherDescription(),
                 weatherDataDTO.weatherIcon(),
+                weatherDataDTO.sunrise(),
+                weatherDataDTO.sunset(),
                 weatherDataDTO.temperature(),
                 weatherDataDTO.temperatureMin(),
                 weatherDataDTO.temperatureMax(),
@@ -62,6 +64,8 @@ public class WeatherDataController {
                 weatherDataDTO.weatherCondition(),
                 weatherDataDTO.weatherDescription(),
                 weatherDataDTO.weatherIcon(),
+                weatherDataDTO.sunrise(),
+                weatherDataDTO.sunset(),
                 weatherDataDTO.temperature(),
                 weatherDataDTO.temperatureMin(),
                 weatherDataDTO.temperatureMax(),
@@ -89,7 +93,7 @@ public class WeatherDataController {
     }
 
     @GetMapping("/forecast/city/{city}")
-    public ResponseEntity<WeatherData> getForecastData(@PathVariable String city) {
+    public ResponseEntity<List<WeatherData>> getForecastData(@PathVariable String city) {
         return  ResponseEntity.ok(weatherApiService.fetchForecastByCity(city));
     }
 }

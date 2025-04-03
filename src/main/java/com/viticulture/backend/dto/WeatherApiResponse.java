@@ -3,17 +3,21 @@ package com.viticulture.backend.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import java.util.List;
+
 
 @Data
 public class WeatherApiResponse {
 
     private Main main;
-    private Weather weather;
+    private List<Weather> weather;
     private Wind wind;
     private Rain rain;
     private Snow snow;
     private Clouds clouds;
     private Sys sys;
+    private long sunriseForecast;
+    private long sunsetForecast;
     private long dt; // Unix timestamp for date
 
     @Data
