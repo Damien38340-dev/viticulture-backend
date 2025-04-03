@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -55,7 +54,7 @@ public class WeatherApiServiceImpl implements WeatherApiService {
                 response.getClouds() != null ? response.getClouds().getAll() : 0);
 
         return new WeatherData(
-                formatCityName(city),
+                city,
                 DateUtils.convertTimestampToString(response.getDt()),
                 response.getWeather().get(0).getMain(),
                 response.getWeather().get(0).getDescription(),
@@ -88,7 +87,7 @@ public class WeatherApiServiceImpl implements WeatherApiService {
 
         return response.getForecasts().stream()
                 .map(forecast -> new WeatherData(
-                        formatCityName(response.getCity().getName()),
+                        response.getCity().getName(),
                         DateUtils.convertTimestampToString(forecast.getDt()),
                         forecast.getWeather() != null && !forecast.getWeather().isEmpty() ? forecast.getWeather().get(0).getMain() : "Unknown",
                         forecast.getWeather() != null && !forecast.getWeather().isEmpty() ? forecast.getWeather().get(0).getDescription() : "No description",
@@ -131,7 +130,8 @@ public class WeatherApiServiceImpl implements WeatherApiService {
         return Math.round(insolationDuration * (1 - cloudCover / 100.0)); // Adjusting with cloud cover
     }
 
-    private String formatCityName(String city) {
+    @Override
+    public String formatCityName(String city) {
         return city.trim().replace(" ", "+");
     }
 

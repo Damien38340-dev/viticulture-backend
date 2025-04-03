@@ -89,11 +89,11 @@ public class WeatherDataController {
 
     @GetMapping("/city/{city}")
     public ResponseEntity<WeatherData> getWeatherDataByCity(@PathVariable String city) {
-        return ResponseEntity.ok(weatherApiService.fetchWeatherData(city));
+        return ResponseEntity.ok(weatherApiService.fetchWeatherData(weatherApiService.formatCityName(city)));
     }
 
     @GetMapping("/forecast/city/{city}")
     public ResponseEntity<List<WeatherData>> getForecastData(@PathVariable String city) {
-        return  ResponseEntity.ok(weatherApiService.fetchForecastByCity(city));
+        return  ResponseEntity.ok(weatherApiService.fetchForecastByCity(weatherApiService.formatCityName(city)));
     }
 }

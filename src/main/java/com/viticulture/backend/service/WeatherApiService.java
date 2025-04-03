@@ -14,4 +14,5 @@ public interface WeatherApiService {
     List<WeatherData> fetchForecastByCity(String city);
 
 
+    String formatCityName(String city);
 }
