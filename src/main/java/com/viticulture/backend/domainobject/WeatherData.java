@@ -48,4 +48,24 @@ public class WeatherData {
     public WeatherData() {
 
     }
+
+    public WeatherData(String city, String date, String weatherCondition, String weatherDescription, String weatherIcon, String sunrise, String sunset, double temperature, double temperatureMin, double temperatureMax, double clouds, double insolationDuration, double humidity, double pressure, double windSpeed, double windDirection, double precipitation) {
+        this.city = city;
+        this.date = date;
+        this.weatherCondition = weatherCondition;
+        this.weatherDescription = weatherDescription;
+        this.weatherIcon = weatherIcon;
+        this.sunrise = sunrise;
+        this.sunset = sunset;
+        this.temperature = temperature;
+        this.temperatureMin = temperatureMin;
+        this.temperatureMax = temperatureMax;
+        this.clouds = clouds;
+        this.insolationDuration = insolationDuration;
+        this.humidity = humidity;
+        this.pressure = pressure;
+        this.windSpeed = windSpeed;
+        this.windDirection = windDirection;
+        this.precipitation = precipitation;
+    }
 }

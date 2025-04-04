@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Instant;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -35,7 +37,7 @@ public class SoilDataController {
     public ResponseEntity<SoilData> createSoilData(@RequestBody SoilApiResponse response) {
         SoilData soilData = new SoilData(
                 response.getPolyId(),
-                DateUtils.convertTimestampToString(response.getDate()),
+                DateUtils.convertDateToString(Date.from(Instant.now())),
                 response.getT0(),
                 response.getMoisture(),
                 response.getT10()
@@ -47,7 +49,7 @@ public class SoilDataController {
     public ResponseEntity<SoilData> updateSoilData(@RequestBody SoilApiResponse response, @PathVariable Long id) {
         SoilData soilData = new SoilData(
                 response.getPolyId(),
-                DateUtils.convertTimestampToString(response.getDate()),
+                DateUtils.convertDateToString(Date.from(Instant.now())),
                 response.getT0(),
                 response.getMoisture(),
                 response.getT10());

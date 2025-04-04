@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,12 +55,12 @@ public class WeatherApiServiceImpl implements WeatherApiService {
 
         return new WeatherData(
                 city,
-                DateUtils.convertTimestampToString(response.getDt()),
+                DateUtils.convertTimestampToString(response.getDt(), response.getTimezone()),
                 response.getWeather().get(0).getMain(),
                 response.getWeather().get(0).getDescription(),
                 response.getWeather().get(0).getIcon(),
-                DateUtils.convertTimestampToStringHoursFormat(response.getSys().getSunrise()),
-                DateUtils.convertTimestampToStringHoursFormat(response.getSys().getSunset()),
+                DateUtils.convertTimestampToStringHoursFormat(response.getSys().getSunrise(), response.getTimezone()),
+                DateUtils.convertTimestampToStringHoursFormat(response.getSys().getSunset(), response.getTimezone()),
                 response.getMain().getTemp(),
                 response.getMain().getTemp_min(),
                 response.getMain().getTemp_max(),
@@ -89,12 +88,12 @@ public class WeatherApiServiceImpl implements WeatherApiService {
         return response.getForecasts().stream()
                 .map(forecast -> new WeatherData(
                         response.getCity().getName(),
-                        DateUtils.convertTimestampToString(forecast.getDt()),
+                        DateUtils.convertTimestampToString(forecast.getDt(), response.getCity().getTimezone()),
                         forecast.getWeather() != null && !forecast.getWeather().isEmpty() ? forecast.getWeather().get(0).getMain() : "Unknown",
                         forecast.getWeather() != null && !forecast.getWeather().isEmpty() ? forecast.getWeather().get(0).getDescription() : "No description",
                         forecast.getWeather() != null && !forecast.getWeather().isEmpty() ? forecast.getWeather().get(0).getIcon() : "default_icon",
-                        DateUtils.convertTimestampToStringHoursFormat(response.getCity().getSunrise()),
-                        DateUtils.convertTimestampToStringHoursFormat(response.getCity().getSunset()),
+                        DateUtils.convertTimestampToStringHoursFormat(response.getCity().getSunrise(), response.getCity().getTimezone()),
+                        DateUtils.convertTimestampToStringHoursFormat(response.getCity().getSunset(), response.getCity().getTimezone()),
                         forecast.getMain().getTemp(),
                         forecast.getMain().getTemp_min(),
                         forecast.getMain().getTemp_max(),
@@ -104,8 +103,7 @@ public class WeatherApiServiceImpl implements WeatherApiService {
                         forecast.getMain().getPressure(),
                         forecast.getWind() != null ? forecast.getWind().getSpeed() : 0.0,
                         forecast.getWind() != null ? forecast.getWind().getDeg() : 0.0,
-                        forecast.getRain() != null ? forecast.getRain().getThreeHour() : 0.0,
-                        forecast.getSnow() != null ? forecast.getSnow().getOneHour() : 0.0
+                        forecast.getRain() != null ? forecast.getRain().getThreeHour() : 0.0
                 ))
                 .collect(Collectors.toList());
     }

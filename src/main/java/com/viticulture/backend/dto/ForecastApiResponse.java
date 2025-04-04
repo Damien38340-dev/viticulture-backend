@@ -24,7 +24,6 @@ public class ForecastApiResponse {
         private Clouds clouds;
         private Wind wind;
         private Rain rain;
-        private Snow snow;
         private Sys sys;
 
         @JsonProperty("dt_txt")
@@ -60,12 +59,6 @@ public class ForecastApiResponse {
     }
 
     @Data
-    public static class Snow {
-        @JsonProperty("1h")
-        private Double oneHour;
-    }
-
-    @Data
     public static class Clouds {
         private int all;
     }
@@ -82,7 +75,7 @@ public class ForecastApiResponse {
         private Coord coord;
         private String country;
         private long population;
-        private long timezone;
+        private int timezone;
         private long sunrise;
         private long sunset;
     }

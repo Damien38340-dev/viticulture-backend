@@ -16,9 +16,8 @@ public class WeatherApiResponse {
     private Snow snow;
     private Clouds clouds;
     private Sys sys;
-    private long sunriseForecast;
-    private long sunsetForecast;
     private long dt; // Unix timestamp for date
+    private int timezone;
 
     @Data
     public static class Main {
